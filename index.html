@@ -9,282 +9,150 @@
   <style>
     * {
       box-sizing: border-box;
-    }
-
-    html, body {
       margin: 0;
       padding: 0;
-      width: 100%;
-      height: 100%;
     }
 
     body {
       font-family: "Segoe UI", Arial, sans-serif;
+      min-height: 100vh;
       overflow: hidden;
-      background: linear-gradient(135deg, #ff758c, #ff7eb3, #ffb6c1);
-      color: #555;
+      background: linear-gradient(135deg, #ff758c, #ff7eb3, #ffc3d5);
     }
 
-    /* -------------------------
-       MAGICAL BACKGROUND
-    ------------------------- */
+    /* ---------- MAGIC BACKGROUND ---------- */
 
     .background {
       position: fixed;
       inset: 0;
       overflow: hidden;
       pointer-events: none;
+      z-index: 0;
     }
 
-    .heart-float {
+    .floating-heart {
       position: absolute;
-      bottom: -50px;
+      bottom: -60px;
       font-size: 25px;
-      animation: floatUp linear infinite;
-      opacity: 0.8;
+      animation: floatHeart 8s linear infinite;
+      opacity: 0;
     }
 
-    .heart-float:nth-child(1) {
+    .floating-heart:nth-child(1) {
       left: 5%;
-      animation-duration: 8s;
-      animation-delay: 1s;
+      animation-delay: 0s;
     }
 
-    .heart-float:nth-child(2) {
-      left: 20%;
-      animation-duration: 10s;
-      animation-delay: 3s;
-    }
-
-    .heart-float:nth-child(3) {
-      left: 40%;
-      animation-duration: 7s;
+    .floating-heart:nth-child(2) {
+      left: 18%;
       animation-delay: 2s;
+      animation-duration: 10s;
     }
 
-    .heart-float:nth-child(4) {
-      left: 60%;
-      animation-duration: 11s;
+    .floating-heart:nth-child(3) {
+      left: 35%;
       animation-delay: 4s;
+      animation-duration: 7s;
     }
 
-    .heart-float:nth-child(5) {
-      left: 80%;
-      animation-duration: 9s;
+    .floating-heart:nth-child(4) {
+      left: 52%;
       animation-delay: 1s;
+      animation-duration: 9s;
     }
 
-    .heart-float:nth-child(6) {
-      left: 90%;
-      animation-duration: 12s;
+    .floating-heart:nth-child(5) {
+      left: 70%;
+      animation-delay: 3s;
+      animation-duration: 11s;
+    }
+
+    .floating-heart:nth-child(6) {
+      left: 88%;
       animation-delay: 5s;
+      animation-duration: 8s;
     }
 
-    @keyframes floatUp {
+    @keyframes floatHeart {
       0% {
-        transform: translateY(0) scale(0.8) rotate(0deg);
+        transform: translateY(0) rotate(0deg);
         opacity: 0;
       }
 
-      20% {
-        opacity: 1;
+      15% {
+        opacity: 0.8;
       }
 
       100% {
-        transform: translateY(-110vh) scale(1.5) rotate(30deg);
+        transform: translateY(-110vh) rotate(360deg);
         opacity: 0;
       }
     }
 
-    /* -------------------------
-       PAGE SYSTEM
-    ------------------------- */
+    /* ---------- PAGES ---------- */
 
     .page {
       position: absolute;
       inset: 0;
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       padding: 20px;
-      transition: 1s ease;
+
+      opacity: 1;
+      transform: scale(1);
+
+      transition:
+        opacity 0.8s ease,
+        transform 0.8s ease;
+
+      z-index: 2;
     }
 
     .page.hidden {
       opacity: 0;
-      transform: scale(1.15);
+      transform: scale(1.08);
       pointer-events: none;
     }
 
-    /* -------------------------
-       FIRST PAGE
-    ------------------------- */
+    /* ---------- CARD ---------- */
 
     .card {
-      width: 100%;
-      max-width: 520px;
-      padding: 45px 30px;
-      text-align: center;
-
-      background: rgba(255, 255, 255, 0.94);
-
-      border-radius: 30px;
-
-      box-shadow:
-        0 20px 60px rgba(120, 20, 60, 0.25),
-        0 0 30px rgba(255, 255, 255, 0.4);
-
-      animation: appear 1.5s ease;
-      position: relative;
-      z-index: 2;
-    }
-
-    .magical-heart {
-      font-size: 75px;
-      animation: heartbeat 1.2s infinite;
-      filter: drop-shadow(0 0 12px rgba(255, 0, 80, 0.4));
-    }
-
-    h1 {
-      margin: 15px 0;
-      color: #e91e63;
-      font-size: 38px;
-    }
-
-    .subtitle {
-      font-size: 19px;
-      color: #777;
-      line-height: 1.7;
-    }
-
-    .small-love {
-      color: #e91e63;
-      font-size: 17px;
-      margin-top: 25px;
-    }
-
-    /* -------------------------
-       BUTTON
-    ------------------------- */
-
-    .love-button {
-      margin-top: 25px;
-      padding: 15px 32px;
-
-      border: none;
-      border-radius: 50px;
-
-      background: linear-gradient(135deg, #e91e63, #ff4081);
-
-      color: white;
-      font-size: 18px;
-      font-weight: bold;
-
-      cursor: pointer;
-
-      box-shadow: 0 8px 20px rgba(233, 30, 99, 0.35);
-
-      transition: 0.3s ease;
-    }
-
-    .love-button:hover {
-      transform: scale(1.08);
-      box-shadow: 0 12px 30px rgba(233, 30, 99, 0.45);
-    }
-
-    .love-button:active {
-      transform: scale(0.96);
-    }
-
-    /* -------------------------
-       SECOND PAGE
-    ------------------------- */
-
-    .second-card {
       width: 100%;
       max-width: 650px;
       max-height: 90vh;
       overflow-y: auto;
 
-      padding: 45px 30px;
+      padding: 45px 35px;
 
       text-align: center;
 
-      background: rgba(255, 255, 255, 0.96);
+      background: rgba(255, 255, 255, 0.95);
 
-      border-radius: 30px;
+      border-radius: 32px;
 
       box-shadow:
-        0 20px 70px rgba(120, 20, 60, 0.3),
+        0 25px 70px rgba(120, 20, 60, 0.3),
         0 0 40px rgba(255, 255, 255, 0.5);
-
-      position: relative;
-      z-index: 2;
 
       scrollbar-width: none;
     }
 
-    .second-card::-webkit-scrollbar {
+    .card::-webkit-scrollbar {
       display: none;
     }
 
-    .sparkle {
-      font-size: 35px;
-      animation: sparkle 2s infinite;
+    /* ---------- HEART ---------- */
+
+    .big-heart {
+      font-size: 75px;
+      margin-bottom: 15px;
+
+      animation: heartbeat 1.2s infinite;
+
+      filter:
+        drop-shadow(0 0 12px rgba(255, 0, 90, 0.4));
     }
-
-    .second-card h2 {
-      color: #e91e63;
-      font-size: 34px;
-      margin: 10px 0 25px;
-    }
-
-    .love-letter {
-      font-size: 18px;
-      line-height: 1.9;
-      color: #555;
-    }
-
-    .love-letter strong {
-      color: #e91e63;
-    }
-
-    .sorry {
-      margin: 25px 0;
-      padding: 22px;
-
-      border-radius: 20px;
-
-      background: linear-gradient(
-        135deg,
-        rgba(255, 117, 140, 0.12),
-        rgba(255, 126, 179, 0.15)
-      );
-
-      color: #d81b60;
-      font-size: 21px;
-      font-weight: bold;
-      line-height: 1.7;
-    }
-
-    .final-love {
-      margin-top: 30px;
-      font-size: 25px;
-      font-weight: bold;
-      color: #e91e63;
-      line-height: 1.6;
-    }
-
-    .signature {
-      margin-top: 30px;
-      color: #888;
-      font-size: 17px;
-      font-style: italic;
-    }
-
-    /* -------------------------
-       ANIMATIONS
-    ------------------------- */
 
     @keyframes heartbeat {
       0%, 100% {
@@ -292,101 +160,227 @@
       }
 
       50% {
-        transform: scale(1.2);
+        transform: scale(1.18);
       }
     }
 
-    @keyframes appear {
-      from {
-        opacity: 0;
-        transform: translateY(50px) scale(0.95);
-      }
+    /* ---------- TEXT ---------- */
 
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
+    h1 {
+      color: #e91e63;
+      font-size: 40px;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      color: #e91e63;
+      font-size: 32px;
+      margin-bottom: 25px;
+    }
+
+    .intro {
+      color: #666;
+      font-size: 19px;
+      line-height: 1.8;
+      margin-bottom: 15px;
+    }
+
+    .letter {
+      color: #555;
+      font-size: 18px;
+      line-height: 1.9;
+      text-align: left;
+    }
+
+    .letter p {
+      margin-bottom: 20px;
+    }
+
+    .pink {
+      color: #e91e63;
+      font-weight: bold;
+    }
+
+    /* ---------- SPECIAL MESSAGE ---------- */
+
+    .special-box {
+      margin: 25px 0;
+      padding: 25px;
+
+      border-radius: 22px;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255, 117, 140, 0.15),
+          rgba(255, 126, 179, 0.2)
+        );
+
+      color: #d81b60;
+
+      font-size: 20px;
+      line-height: 1.8;
+
+      font-weight: 600;
+
+      text-align: center;
+    }
+
+    /* ---------- BUTTON ---------- */
+
+    .love-button {
+      border: none;
+      outline: none;
+
+      margin-top: 20px;
+
+      padding: 15px 30px;
+
+      border-radius: 50px;
+
+      background: linear-gradient(
+        135deg,
+        #e91e63,
+        #ff4081
+      );
+
+      color: white;
+
+      font-size: 18px;
+      font-weight: bold;
+
+      cursor: pointer;
+
+      box-shadow:
+        0 8px 20px rgba(233, 30, 99, 0.35);
+
+      transition: all 0.3s ease;
+    }
+
+    .love-button:hover {
+      transform: scale(1.08);
+
+      box-shadow:
+        0 12px 30px rgba(233, 30, 99, 0.5);
+    }
+
+    .love-button:active {
+      transform: scale(0.95);
+    }
+
+    /* ---------- SPARKLES ---------- */
+
+    .sparkles {
+      font-size: 30px;
+      margin-bottom: 10px;
+
+      animation: sparkle 2s infinite;
     }
 
     @keyframes sparkle {
       0%, 100% {
         transform: scale(1);
-        opacity: 0.7;
       }
 
       50% {
-        transform: scale(1.3);
-        opacity: 1;
+        transform: scale(1.25);
       }
     }
 
-    /* -------------------------
-       MOBILE
-    ------------------------- */
+    /* ---------- FINAL PAGE ---------- */
+
+    .final-heart {
+      font-size: 85px;
+
+      animation: heartbeat 1.2s infinite;
+    }
+
+    .final-message {
+      color: #e91e63;
+      font-size: 22px;
+      line-height: 1.8;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+
+    .signature {
+      margin-top: 30px;
+
+      color: #888;
+
+      font-size: 18px;
+
+      font-style: italic;
+    }
+
+    /* ---------- MOBILE ---------- */
 
     @media (max-width: 600px) {
 
       .card {
         padding: 35px 22px;
+        max-height: 88vh;
       }
 
       h1 {
-        font-size: 30px;
+        font-size: 31px;
       }
 
-      .magical-heart {
+      h2 {
+        font-size: 27px;
+      }
+
+      .big-heart {
         font-size: 65px;
       }
 
-      .subtitle {
+      .intro {
         font-size: 17px;
       }
 
-      .second-card {
-        padding: 35px 22px;
-      }
-
-      .second-card h2 {
-        font-size: 28px;
-      }
-
-      .love-letter {
+      .letter {
         font-size: 17px;
+        line-height: 1.8;
       }
 
-      .sorry {
+      .special-box {
         font-size: 18px;
       }
 
-      .final-love {
-        font-size: 22px;
+      .love-button {
+        font-size: 16px;
+        padding: 14px 24px;
       }
     }
   </style>
 </head>
 
+
 <body>
 
-  <!-- MAGICAL FLOATING HEARTS -->
+  <!-- FLOATING HEARTS -->
+
   <div class="background">
-    <div class="heart-float">❤️</div>
-    <div class="heart-float">💕</div>
-    <div class="heart-float">💗</div>
-    <div class="heart-float">💖</div>
-    <div class="heart-float">❤️</div>
-    <div class="heart-float">💞</div>
+
+    <div class="floating-heart">❤️</div>
+    <div class="floating-heart">💕</div>
+    <div class="floating-heart">💗</div>
+    <div class="floating-heart">💖</div>
+    <div class="floating-heart">💞</div>
+    <div class="floating-heart">❤️</div>
+
   </div>
 
 
-  <!-- =========================
-       FIRST PAGE
-  ========================== -->
+  <!-- =================================================
+       PAGE 1
+  ================================================== -->
 
   <section id="page1" class="page">
 
     <div class="card">
 
-      <div class="magical-heart">
+      <div class="big-heart">
         ❤️
       </div>
 
@@ -394,22 +388,26 @@
         Hi, My Husband ❤️
       </h1>
 
-      <p class="subtitle">
-        I made a little magical place<br>
-        just for you... ✨
+      <p class="intro">
+        I made something special for you...
       </p>
 
-      <p class="subtitle">
-        There is something my heart<br>
-        really wants to tell you.
+      <p class="intro">
+        It's not just a webpage.
+        <br>
+        It's a little piece of my heart. 🥺💕
       </p>
 
-      <div class="small-love">
-        Please don't be angry with me 🥺💕
-      </div>
+      <p class="intro">
+        Please take a moment and read everything
+        I want to tell you.
+      </p>
 
-      <button class="love-button" onclick="openNextPage()">
-        Please Go To Next Page ❤️
+      <button
+        class="love-button"
+        onclick="nextPage(1, 2)"
+      >
+        💌 Open My Heart
       </button>
 
     </div>
@@ -417,181 +415,485 @@
   </section>
 
 
-  <!-- =========================
-       SECOND PAGE
-  ========================== -->
+  <!-- =================================================
+       PAGE 2
+  ================================================== -->
 
   <section id="page2" class="page hidden">
 
-    <div class="second-card">
+    <div class="card">
 
-      <div class="sparkle">
-        ✨ 💕 ✨
+      <div class="sparkles">
+        ✨ ❤️ ✨
       </div>
 
       <h2>
-        My Love, Please Read This ❤️
+        My Love, Please Understand Me 🥺
       </h2>
 
-      <div class="love-letter">
+      <div class="letter">
 
         <p>
           My Dear Husband,
         </p>
 
         <p>
-          I know I made some mistakes,
-          and I know that sometimes my actions
-          may hurt you.
+          I know sometimes you get angry with me.
+          I understand that everyone has moments
+          when they lose their patience.
+        </p>
+
+        <div class="special-box">
+
+          But my love, when you are angry with me,
+          it becomes really difficult for me. 🥺❤️
+
+          <br><br>
+
+          Please try to control your anger.
+
+        </div>
+
+        <p>
+          I'm not saying this because I don't
+          understand you.
         </p>
 
         <p>
-          <strong>
-            For everything I did wrong,
-            I'm truly, truly sorry. 🥺
-          </strong>
+          I'm saying this because
+          <span class="pink">
+            your anger and your words affect my heart
+          </span>
+          more than you may realize.
         </p>
 
         <p>
-          I never wanted to hurt your heart.
-          Sometimes I make mistakes because
-          I'm human, but please believe me...
-          <strong>my love for you is always real. ❤️</strong>
+          And when you are angry with anyone,
+          please try to control your anger too.
+          Sometimes people around you may not know
+          how to handle it.
+        </p>
+
+        <p>
+          I know I also make mistakes.
+          I'm not perfect.
+        </p>
+
+        <p>
+          But believe me, every time I do something,
+          I genuinely try to do it right.
+        </p>
+
+        <p>
+          I always think about how I can make things
+          better and how I can make you happy.
         </p>
 
       </div>
 
-      <div class="sorry">
-
-        Please stop being angry with me, my love. 🥺❤️
-
-        <br>
-
-        Please forgive me for my mistakes.
-
-        <br>
-
-        I promise I will always try to understand you,
-        respect you, and love you better.
-
-      </div>
-
-      <div class="love-letter">
-
-        <p>
-          I don't want a day where we are angry
-          with each other.
-        </p>
-
-        <p>
-          I want your smile.
-          I want your hugs.
-          I want our silly conversations.
-          I want our little fights that end with us
-          laughing again. ❤️
-        </p>
-
-        <p>
-          Most importantly...
-          <strong>
-            I want YOU.
-          </strong>
-        </p>
-
-        <p>
-          Please love me always,
-          even when I'm not perfect.
-          ❤️
-        </p>
-
-      </div>
-
-      <div class="final-love">
-
-        I'm Sorry, My Love. ❤️
-
-        <br>
-
-        I Love You More Than Words Can Say. 💕
-
-        <br>
-
-        Please Don't Stay Angry With Me. 🥺
-
-        <br>
-
-        Always & Forever... ❤️
-
-      </div>
-
-      <div class="signature">
-
-        With all my heart,<br>
-        Your Wife ❤️
-
-      </div>
+      <button
+        class="love-button"
+        onclick="nextPage(2, 3)"
+      >
+        ❤️ There Is More In My Heart
+      </button>
 
     </div>
 
   </section>
 
 
-  <!-- =========================
+  <!-- =================================================
+       PAGE 3
+  ================================================== -->
+
+  <section id="page3" class="page hidden">
+
+    <div class="card">
+
+      <div class="big-heart">
+        🥺❤️
+      </div>
+
+      <h2>
+        I'm Truly Sorry, My Love
+      </h2>
+
+      <div class="letter">
+
+        <p>
+          Sometimes I don't even understand
+          how I end up making mistakes.
+        </p>
+
+        <p>
+          I start everything with a good heart.
+          I always think I'm doing the right thing,
+          but somehow I make mistakes.
+        </p>
+
+        <p>
+          And when I realize that I've hurt you,
+          I feel really bad inside.
+        </p>
+
+        <div class="special-box">
+
+          I'm sorry for every mistake I've made. ❤️
+
+          <br>
+
+          I'm sorry for every time I hurt you.
+
+          <br>
+
+          I'm sorry for every moment
+          when I made you disappointed.
+
+          <br><br>
+
+          Please forgive me. 🥺💕
+
+        </div>
+
+        <p>
+          I don't want us to spend our days
+          angry at each other.
+        </p>
+
+        <p>
+          I don't want fights to become bigger
+          than our love.
+        </p>
+
+        <p>
+          I just want us to understand each other,
+          forgive each other and grow together.
+        </p>
+
+        <p>
+          I promise I will keep trying.
+          I will keep learning.
+          And I will keep trying to become
+          a better wife for you.
+        </p>
+
+      </div>
+
+      <button
+        class="love-button"
+        onclick="nextPage(3, 4)"
+      >
+        💕 Please Read One More Thing
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- =================================================
+       PAGE 4
+  ================================================== -->
+
+  <section id="page4" class="page hidden">
+
+    <div class="card">
+
+      <div class="big-heart">
+        💖
+      </div>
+
+      <h2>
+        All I Want Is Your Love
+      </h2>
+
+      <div class="letter">
+
+        <p>
+          My love, I want more love from you.
+          ❤️
+        </p>
+
+        <p>
+          I want your care.
+          I want your attention.
+          I want your hugs.
+          I want your understanding.
+        </p>
+
+        <div class="special-box">
+
+          Please love me.
+
+          <br>
+
+          Please care for me.
+
+          <br>
+
+          Please don't stop choosing me.
+
+          <br>
+
+          Please don't stop loving me. ❤️
+
+        </div>
+
+        <p>
+          There is no one for me like you.
+        </p>
+
+        <p>
+          You are the person I want to tell
+          everything to.
+        </p>
+
+        <p>
+          You are the person whose love
+          means the most to me.
+        </p>
+
+        <p>
+          I may not always know the perfect way
+          to show it...
+        </p>
+
+        <p>
+          But I promise you,
+          <span class="pink">
+            I always love you.
+          </span>
+        </p>
+
+        <p>
+          And honestly,
+          I don't just love you...
+        </p>
+
+        <div class="special-box">
+
+          I love you more than I know
+          how to explain. ❤️
+
+          <br><br>
+
+          More than yesterday.
+          <br>
+          More than words can say.
+          <br>
+          And hopefully more with every tomorrow. 💕
+
+        </div>
+
+      </div>
+
+      <button
+        class="love-button"
+        onclick="nextPage(4, 5)"
+      >
+        💍 One Last Thing, My Love
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- =================================================
+       FINAL PAGE
+  ================================================== -->
+
+  <section id="page5" class="page hidden">
+
+    <div class="card">
+
+      <div class="final-heart">
+        ❤️
+      </div>
+
+      <h1>
+        I Choose You
+      </h1>
+
+      <div class="final-message">
+
+        I'm Sorry, My Love. 🥺❤️
+
+        <br><br>
+
+        Please forgive me.
+
+        <br>
+
+        Please don't stay angry with me.
+
+        <br><br>
+
+        Please love me.
+
+        <br>
+
+        Please care for me.
+
+        <br>
+
+        Please hold my hand.
+
+        <br><br>
+
+        Because no matter what happens...
+
+        <br>
+
+        <strong>
+          I will always choose you. ❤️
+        </strong>
+
+        <br><br>
+
+        Through every happy moment,
+        every difficult moment,
+        every silly fight,
+        every tear,
+        and every smile...
+
+        <br><br>
+
+        <strong>
+          I will always love you. 💕
+        </strong>
+
+        <br><br>
+
+        Always & Forever. ❤️
+
+      </div>
+
+      <div class="signature">
+
+        With all my heart,
+
+        <br><br>
+
+        Your Wife ❤️
+
+      </div>
+
+      <button
+        class="love-button"
+        onclick="makeMagic()"
+      >
+        💖 I Love You
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- =================================================
        JAVASCRIPT
-  ========================== -->
+  ================================================== -->
 
   <script>
 
-    function openNextPage() {
+    function nextPage(currentPage, nextPageNumber) {
 
-      const page1 = document.getElementById("page1");
-      const page2 = document.getElementById("page2");
+      const current =
+        document.getElementById("page" + currentPage);
 
-      // Hide first page
-      page1.classList.add("hidden");
+      const next =
+        document.getElementById("page" + nextPageNumber);
 
-      // Show second page
+      current.classList.add("hidden");
+
       setTimeout(function() {
-        page2.classList.remove("hidden");
+
+        next.classList.remove("hidden");
+
       }, 400);
 
-      // Create extra magical hearts
       createMagicHearts();
+
     }
 
 
     function createMagicHearts() {
 
-      const hearts = ["❤️", "💕", "💗", "💖", "💞", "✨"];
+      const symbols = [
+        "❤️",
+        "💕",
+        "💗",
+        "💖",
+        "💞",
+        "✨",
+        "💓"
+      ];
 
-      for (let i = 0; i < 25; i++) {
+      for (let i = 0; i < 30; i++) {
 
-        const heart = document.createElement("div");
+        const heart =
+          document.createElement("div");
 
         heart.innerHTML =
-          hearts[Math.floor(Math.random() * hearts.length)];
+          symbols[
+            Math.floor(
+              Math.random() * symbols.length
+            )
+          ];
 
         heart.style.position = "fixed";
-        heart.style.left = Math.random() * 100 + "vw";
-        heart.style.bottom = "-30px";
+
+        heart.style.left =
+          Math.random() * 100 + "vw";
+
+        heart.style.bottom = "-40px";
+
         heart.style.fontSize =
-          (15 + Math.random() * 25) + "px";
+          15 + Math.random() * 30 + "px";
 
         heart.style.pointerEvents = "none";
-        heart.style.zIndex = "999";
+
+        heart.style.zIndex = "9999";
 
         const duration =
           3 + Math.random() * 4;
 
         heart.style.animation =
-          `magicHeart ${duration}s linear forwards`;
+          "magicHeart " +
+          duration +
+          "s linear forwards";
 
         document.body.appendChild(heart);
 
         setTimeout(function() {
+
           heart.remove();
+
         }, duration * 1000);
+
       }
+
+    }
+
+
+    function makeMagic() {
+
+      createMagicHearts();
+
+      setTimeout(function() {
+
+        createMagicHearts();
+
+      }, 500);
+
+      setTimeout(function() {
+
+        createMagicHearts();
+
+      }, 1000);
+
     }
 
   </script>
@@ -602,25 +904,31 @@
     @keyframes magicHeart {
 
       0% {
+
         transform:
           translateY(0)
           rotate(0deg)
           scale(0.5);
 
         opacity: 0;
+
       }
 
       15% {
+
         opacity: 1;
+
       }
 
       100% {
+
         transform:
           translateY(-110vh)
           rotate(360deg)
           scale(1.4);
 
         opacity: 0;
+
       }
 
     }
